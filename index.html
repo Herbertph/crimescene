@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Scene</title>
+</head>
+<style>
+    #wrapper {
+        width: 50%;
+        height: 1000px;
+        margin: 0 auto;
+        text-align: center;
+        background-color: #ecb477;
+        color: #233451;
+        border-style: solid;
+        position: relative;
+    }
+
+    #buttons {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 5%;
+    }
+
+
+
+    h3 {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 8%;
+    }
+
+    button {
+        margin-left: 10px;
+    }
+
+    nav {
+        display: none;
+    }
+
+    #theCase {
+        display: inline-block;
+        overflow: hidden;
+        border-right: .20em solid #233451;
+        /* change color and thickness as desired */
+        white-space: nowrap;
+        margin: 0 auto;
+        letter-spacing: .15em;
+        animation: blink .5s step-end infinite;
+    }
+
+    @keyframes blink {
+        70% {
+            border-color: transparent;
+        }
+    }
+
+    /*Css to the popup that shows the description of the buttons*/
+    #popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        display: none;
+    }
+</style>
+
+<body>
+    <div id="wrapper">
+        <h1>Um estudo em Vermelho</h1>
+        <div id="theCase"></div>
+        <script>
+            let sceneDescription = `Aqui teremos toda a descricao da cena do crime.`;
+            let i = 0;
+            let speed = 60; // adjust typing speed here
+
+            function typeWriter() {
+
+
+
+
+                let popup = document.getElementById("popup");
+
+                let buttons = document.querySelectorAll("#buttons button");
+                buttons.forEach(button => {
+                    button.addEventListener("mouseenter", event => {
+                        let text = event.target.getAttribute("data-text");
+                        popup.textContent = text;
+                        popup.style.display = "block";
+                    });
+                    button.addEventListener("mouseleave", event => {
+                        popup.style.display = "none";
+                    });
+                });
+
+                if (i < 15) {
+                    document.getElementById("theCase").innerHTML += sceneDescription.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+
+                if (i >= 15 && i < sceneDescription.length) {
+                    let speed = 50;
+                    document.getElementById("theCase").innerHTML += sceneDescription.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+                if (i === sceneDescription.length) {
+                    document.querySelector("nav").style.display = "block";
+                }
+            }
+
+            typeWriter();
+
+
+        </script>
+        <nav>
+            <h3>Investigate</h3><!-- Adicionar a figura de uma lupa aqui -->
+            <div id="buttons">
+                <button id="item1" data-popup="popup1">Wedding Ring</button>
+                <button id="item2" data-popup="popup2">Gold Watch</button>
+                <button id="item3" data-popup="popup3">Decameron</button>
+                <button id="item4" data-popup="popup3">Rache</button>
+            </div>
+            <script>
+                let buttonData = {
+                    item1: "Wedding Ring",
+                    item2: "This is item 2",
+                    item3: "This is item 3",
+                    item4: "This is item 4",
+                };
+
+                document.getElementById("item1").setAttribute("data-text", buttonData.item1);
+                document.getElementById("item2").setAttribute("data-text", buttonData.item2);
+                document.getElementById("item3").setAttribute("data-text", buttonData.item3);
+                document.getElementById("item4").setAttribute("data-text", buttonData.item4);
+            </script>
+        </nav>
+        <div id="popup"></div>
+    </div>
+</body>
+
+</html>
